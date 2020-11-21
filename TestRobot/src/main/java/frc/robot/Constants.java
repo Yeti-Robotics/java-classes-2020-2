@@ -24,5 +24,6 @@ public final class Constants {
     public static final int RIGHT_VICTOR_1 = 4;
     public static final int RIGHT_VICTOR_2 =5;
 
-    // intake constants
+    // color wheel constants
+    public static final int COLOR_WHEEL_TALON = 6;
 }

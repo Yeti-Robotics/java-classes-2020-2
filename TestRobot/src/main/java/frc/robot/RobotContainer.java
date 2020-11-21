@@ -8,10 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.subsystems.DrivetrainSubsystem;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 
 /**
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -25,6 +28,9 @@ public class RobotContainer {
 
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
+  public final Joystick driverStationJoy;
+  public DrivetrainSubsystem drivetrainSubsystem;
+
 
 
   /**
@@ -33,6 +39,11 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+    driverStationJoy = new Joystick(0);
+    drivetrainSubsystem = new DrivetrainSubsystem();
+
+    drivetrainSubsystem.setDefaultCommand(new RunCommand(() -> drivetrainSubsystem.drive(getLeftY(), getRightY()), drivetrainSubsystem));
   }
 
   /**
@@ -42,6 +53,30 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+  }
+
+  public double getLeftY() {
+    if(driverStationJoy.getRawAxis(1) >= .1 || driverStationJoy.getRawAxis(1) <= -.1){
+      return driverStationJoy.getRawAxis(1);
+    } else {
+      return 0;
+    }
+  }
+
+  public double getRightY() {
+      if(driverStationJoy.getRawAxis(3) >= .1 || driverStationJoy.getRawAxis(3) <= -0.1) {
+        return driverStationJoy.getRawAxis(3);
+      } else {
+        return 0;
+      }
+  }
+
+  public double getLeftX() {
+    return driverStationJoy.getX();
+  }
+
+  public double getRightX() {
+    return driverStationJoy.getX();
   }
 
 
