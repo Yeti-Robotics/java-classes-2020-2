@@ -31,16 +31,17 @@ public class PostionControlCommand extends CommandBase{
 
     @Override
     public void execute() {
-
+        colorWheelSubsystem.moveWheel(0.4);
+        System.out.println("Wanted color: " + finalColor + ". Current color: " + colorWheelSubsystem.getColor());
     }
 
     @Override
     public boolean isFinished() {
-
+        return colorWheelSubsystem.getColor() == finalColor;
     }
 
     @Override
     public void end(final boolean interrupted){
-
+        colorWheelSubsystem.stopWheel();
     }
 }
